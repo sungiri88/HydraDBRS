@@ -1,0 +1,14 @@
+C:\Users\ivar\Source\Repos\HydraProto\Server\Hydra.DBRS.Infrastructure\bin\Release\Hydra.DBRS.Infrastructure.dll
+C:\Users\ivar\Source\Repos\HydraProto\Server\Hydra.DBRS.Infrastructure\bin\Release\Hydra.DBRS.Infrastructure.pdb
+C:\Users\ivar\Source\Repos\HydraProto\Server\Hydra.DBRS.Infrastructure\bin\Release\Newtonsoft.Json.dll
+C:\Users\ivar\Source\Repos\HydraProto\Server\Hydra.DBRS.Infrastructure\bin\Release\Newtonsoft.Json.xml
+C:\Users\ivar\Source\Repos\HydraProto\Server\Hydra.DBRS.Infrastructure\obj\Release\Hydra.DBRS.Infrastructure.csprojResolveAssemblyReference.cache
+C:\Users\ivar\Source\Repos\HydraProto\Server\Hydra.DBRS.Infrastructure\obj\Release\Hydra.DBRS.Infrastructure.dll
+C:\Users\ivar\Source\Repos\HydraProto\Server\Hydra.DBRS.Infrastructure\obj\Release\Hydra.DBRS.Infrastructure.pdb
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\Hydra.DBRS.Infrastructure\bin\Release\Hydra.DBRS.Infrastructure.dll
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\Hydra.DBRS.Infrastructure\bin\Release\Hydra.DBRS.Infrastructure.pdb
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\Hydra.DBRS.Infrastructure\bin\Release\Newtonsoft.Json.dll
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\Hydra.DBRS.Infrastructure\bin\Release\Newtonsoft.Json.xml
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\Hydra.DBRS.Infrastructure\obj\Release\Hydra.DBRS.Infrastructure.dll
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\Hydra.DBRS.Infrastructure\obj\Release\Hydra.DBRS.Infrastructure.pdb
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\Hydra.DBRS.Infrastructure\obj\Release\Hydra.DBRS.Infrastructure.csprojResolveAssemblyReference.cache

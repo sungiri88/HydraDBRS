@@ -1,0 +1,10 @@
+C:\Users\ivar\Source\Repos\HydraProto\Server\DALC4NET\bin\Release\DALC4NET.dll
+C:\Users\ivar\Source\Repos\HydraProto\Server\DALC4NET\bin\Release\DALC4NET.pdb
+C:\Users\ivar\Source\Repos\HydraProto\Server\DALC4NET\obj\Release\DALC4NET.csprojResolveAssemblyReference.cache
+C:\Users\ivar\Source\Repos\HydraProto\Server\DALC4NET\obj\Release\DALC4NET.dll
+C:\Users\ivar\Source\Repos\HydraProto\Server\DALC4NET\obj\Release\DALC4NET.pdb
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\DALC4NET\bin\Release\DALC4NET.dll
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\DALC4NET\bin\Release\DALC4NET.pdb
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\DALC4NET\obj\Release\DALC4NET.dll
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\DALC4NET\obj\Release\DALC4NET.pdb
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\DALC4NET\obj\Release\DALC4NET.csprojResolveAssemblyReference.cache

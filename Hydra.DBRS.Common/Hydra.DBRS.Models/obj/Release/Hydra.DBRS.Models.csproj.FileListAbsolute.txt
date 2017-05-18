@@ -1,0 +1,10 @@
+C:\Users\ivar\Source\Repos\HydraProto\Server\Hydra.DBRS.Models\bin\Release\Hydra.DBRS.Models.dll
+C:\Users\ivar\Source\Repos\HydraProto\Server\Hydra.DBRS.Models\bin\Release\Hydra.DBRS.Models.pdb
+C:\Users\ivar\Source\Repos\HydraProto\Server\Hydra.DBRS.Models\obj\Release\Hydra.DBRS.Models.csprojResolveAssemblyReference.cache
+C:\Users\ivar\Source\Repos\HydraProto\Server\Hydra.DBRS.Models\obj\Release\Hydra.DBRS.Models.dll
+C:\Users\ivar\Source\Repos\HydraProto\Server\Hydra.DBRS.Models\obj\Release\Hydra.DBRS.Models.pdb
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\Hydra.DBRS.Models\bin\Release\Hydra.DBRS.Models.dll
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\Hydra.DBRS.Models\bin\Release\Hydra.DBRS.Models.pdb
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\Hydra.DBRS.Models\obj\Release\Hydra.DBRS.Models.dll
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\Hydra.DBRS.Models\obj\Release\Hydra.DBRS.Models.pdb
+C:\Users\ivar\Source\Repos\HydraProto\Hydra.DBRS.Server\Hydra.DBRS.Common\Hydra.DBRS.Models\obj\Release\Hydra.DBRS.Models.csprojResolveAssemblyReference.cache

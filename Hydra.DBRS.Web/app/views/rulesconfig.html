@@ -1,0 +1,233 @@
+<div class="split-me-container" id="mainSc">
+    <div class="split-me" style="height:100%;">
+        <div class="row">
+            <div class="col-lg-12 col-md-12" style="padding-top:4.5em; padding-left:5px; padding-right:5px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-4">File Viewer</div>
+                            <div class="col-lg-8">
+                                <a target="_blank" style="float: right;" href="{{selectedTemplate.MainTemplate}}"><i class="fa fa-windows"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" id="noti-box1" style="padding: 0;">
+                        <div class="embed-responsive embed-responsive-16by9" style="height:100%;">
+                            <iframe class="embed-responsive-item" id="pdfFrame" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12" style="padding-top:4.5em; padding-left:5px; padding-right:5px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-4">Configuration</div>
+                            <div class="col-lg-4">
+                                <select class="form-control m-b-10" style="margin-bottom:0; margin-top:-0.9rem;" ng-options="company.CompanyName for company in companies"
+                                        ng-model="selectedCompany" ng-change="companyChange()">
+                                    <option>Select Company...</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <select class="form-control m-b-10" style="margin-bottom:0; margin-top:-0.9rem;" ng-options="template.CompanyHeader for template in templates"
+                                        ng-model="selectedTemplate" ng-change="templateChange()">
+                                    <option>Select Template...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#basic" target="_self">Basic</a>
+                        </li>
+                        <li class="">
+                            <a data-toggle="tab" href="#advanced" target="_self">Advanced</a>
+                        </li>
+                    </ul>
+                    <div class="panel-body" id="noti-box2" style="padding: 0;">
+                        <div class="tab-content">
+                            <div id="basic" class="tab-pane active">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form class="form-horizontal" role="form">
+                                            <!--<div class="form-group">
+                                                <label class="control-label col-lg-3" for="inputSuccess">Fields</label>
+                                                <div class="col-lg-9">
+                                                    <select class="form-control m-b-10" ng-model="rule.CustomFieldName">
+                                                        <option>Select Custom Field...</option>
+                                                        <option ng-repeat="customField in customFields">{{customField}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr />-->
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="col-lg-3 control-label">
+                                                    Search
+                                                </label>
+                                                <div class="col-lg-9">
+                                                    <input type="text" class="form-control" id="txtFieldSearch" ng-model="searchText" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-3" for="inputSuccess">Headers</label>
+                                                <div class="col-lg-9">
+                                                    <select multiple="" class="form-control" ng-model="header" ng-dblclick="addRule()">
+                                                        <option ng-repeat="header in templateHeaders | filter:searchText">{{header}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputPassword3" class="col-lg-3 control-label">
+                                                    Field Occurrence
+                                                </label>
+                                                <div class="col-lg-9">
+                                                    <input placeholder="Enter the numeric value for the occurrence" type="text" class="form-control" id="txtFieldOcc" ng-model="fieldOccurrence" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-8">
+                                                </div>
+                                                <div class="col-lg-4" style="text-align:right;">
+                                                    <button class="btn btn-info" type="button" ng-click="addRule()">Add</button>
+                                                    <button class="btn btn-default" type="button" ng-click="clear()">Clear</button>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="container-fluid">
+                                                <table class="table table-hover">
+                                                    <tr>
+                                                        <td id="tblTagItems"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <hr />
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <form class="form-horizontal" role="form">
+                                                        <div class="form-group">
+                                                            <label for="inputPassword3" class="col-lg-3 control-label">
+                                                                Row Name
+                                                            </label>
+                                                            <div class="col-lg-9">
+                                                                <input type="text" class="form-control" id="txtFieldOcc" ng-model="rule.RowName" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="inputPassword3" class="col-lg-3 control-label">
+                                                                Column Name
+                                                            </label>
+                                                            <div class="col-lg-9">
+                                                                <input type="text" class="form-control" id="txtFieldOcc" ng-model="rule.ColumnName" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="inputPassword3" class="col-lg-3 control-label">
+                                                                Column Occurrence
+                                                            </label>
+                                                            <div class="col-lg-9">
+                                                                <input type="text" class="form-control" id="txtFieldOcc" ng-model="rule.ColOccurrence" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-lg-3" for="inputSuccess">Format</label>
+                                                            <div class="col-lg-9">
+                                                                <select class="form-control m-b-10" ng-model="rule.Format">
+                                                                    <option>String</option>
+                                                                    <option>Numeric</option>
+                                                                    <option>Date</option>
+                                                                    <option>Currency</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" ng-repeat="df in dynamicFields">
+                                                            <label class="control-label col-lg-3" for="inputSuccess">{{df.FieldName}}</label>
+                                                            <div class="col-lg-9">
+                                                                <select id="{{'select' + '_' + $index}}" class="form-control m-b-10">
+                                                                    <option selected></option>
+                                                                    <option ng-repeat="dfVal in df.LookupData">{{dfVal}}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-lg-8">
+                                                </div>
+                                                <div class="col-lg-4" style="text-align:right;">
+                                                    <button class="btn btn-info" type="button" ng-click="addRuleConfig()">Add Rule</button>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body table-responsive">
+                                                <table class="table table-hover">
+                                                    <tr style="background-color:silver;">
+                                                        <th>Hierarchy</th>
+                                                        <th>Row Name</th>
+                                                        <th>Column Name</th>
+                                                        <th>Dynamic Fields</th>
+                                                        <th>Format</th>
+                                                    </tr>
+                                                    <tr ng-repeat="rule in rules">
+                                                        <td><span ng-repeat="header in rule.Headers">{{header}}</span></td>
+                                                        <td>{{rule.RowName}}</td>
+                                                        <td>{{rule.ColumnName}}</td>
+                                                        <td>{{rule.DynamicFields}}</td>
+                                                        <td>{{rule.Format}}</td>
+                                                        <td>
+                                                            <a href="javascript:return false;" target="_self">
+                                                                <i class="ion-edit" style="font-size:20px;"></i>
+                                                            </a>
+                                                            &nbsp;
+                                                            <a href="javascript:void();" target="_self">
+                                                                <i class="ion-trash-b" style="font-size:20px; color:red;"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div><!-- /.box-body -->
+                                            <div class="form-group">
+                                                <div class="col-lg-8">
+                                                </div>
+                                                <div class="col-lg-4" style="text-align:right;">
+                                                    <button class="btn btn-info" type="button" ng-click="saveConfig()">Save</button>
+                                                    <button class="btn btn-danger" type="button" onclick="javascript: window.location.reload();">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        <h4 class="modal-title">Field Value Configuration</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <div class="row">
+                                                            <div class="col-lg-3"></div>
+                                                            <div class="col-lg-9">
+                                                                <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+                                                                <button class="btn btn-info" type="button">Save changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="advanced" class="tab-pane">
+                                Advanced
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
