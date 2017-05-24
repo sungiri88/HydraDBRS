@@ -1,0 +1,17 @@
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\HGarb.Business.dll.config
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\HGarb.Business.dll
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\HGarb.Business.pdb
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\HGarb.DataAccess.dll
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\HGarb.Infrastructure.dll
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\HGarb.Models.dll
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\Newtonsoft.Json.dll
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\HGarb.DataAccess.pdb
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\HGarb.Infrastructure.pdb
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\HGarb.Models.pdb
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.xml
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.xml
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\obj\Debug\HGarb.Business.csprojResolveAssemblyReference.cache
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\obj\Debug\HGarb.Business.dll
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Business\obj\Debug\HGarb.Business.pdb

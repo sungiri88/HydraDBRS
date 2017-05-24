@@ -1,0 +1,6 @@
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\bin\Debug\HGarb.Infrastructure.dll
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\bin\Debug\HGarb.Infrastructure.pdb
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\bin\Debug\Newtonsoft.Json.dll
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\obj\Debug\HGarb.Infrastructure.csprojResolveAssemblyReference.cache
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\obj\Debug\HGarb.Infrastructure.dll
+D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\obj\Debug\HGarb.Infrastructure.pdb
