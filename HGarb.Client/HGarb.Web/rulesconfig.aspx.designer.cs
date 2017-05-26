@@ -67,6 +67,51 @@ namespace HGarb.Web {
         protected global::System.Web.UI.WebControls.TextBox txtElementName;
         
         /// <summary>
+        /// cbIsInheritRule control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox cbIsInheritRule;
+        
+        /// <summary>
+        /// panel_GenericRuleType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel panel_GenericRuleType;
+        
+        /// <summary>
+        /// ddlSelectAssetClass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlSelectAssetClass;
+        
+        /// <summary>
+        /// btnAddGenericRule control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddGenericRule;
+        
+        /// <summary>
+        /// tbRuleName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbRuleName;
+        
+        /// <summary>
         /// lbDEFields control.
         /// </summary>
         /// <remarks>
@@ -94,15 +139,6 @@ namespace HGarb.Web {
         protected global::System.Web.UI.WebControls.TextBox tbRuleData;
         
         /// <summary>
-        /// tbRuleName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbRuleName;
-        
-        /// <summary>
         /// cbPreviousYear control.
         /// </summary>
         /// <remarks>
@@ -119,15 +155,6 @@ namespace HGarb.Web {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbPrevPeriodValues;
-        
-        /// <summary>
-        /// cbIsInheritRule control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbIsInheritRule;
         
         /// <summary>
         /// btnAddRule control.

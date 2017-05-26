@@ -79,6 +79,7 @@ namespace HGarb.DataAccess
         {
             using (DbCommand cmd = this.database.GetStoredProcCommand("pInsertGenericRuleConfig"))
             {
+                this.database.AddInParameter(cmd, "@AssetClass", DbType.String, rulesInfo.AssetClass);
                 this.database.AddInParameter(cmd, "@RuleName", DbType.String, rulesInfo.RuleName);
                 this.database.AddInParameter(cmd, "@RuleCondition", DbType.String, rulesInfo.RuleCondition);
                 this.database.AddInParameter(cmd, "@ElementName", DbType.String, rulesInfo.ElementName);
@@ -101,6 +102,22 @@ namespace HGarb.DataAccess
         public DataSet LoadGenericRules()
         {
             using (DbCommand cmd = this.database.GetSqlStringCommand("select * from GenericRulesConfig"))
+            {
+                return this.database.ExecuteDataSet(cmd);
+            }
+        }
+        public DataSet LoadGenericRulesByKey(string dictKey)
+        {
+            string commandText = string.Format("select * from GenericRulesConfig where AssetClass = '{0}' ", dictKey);
+            using (DbCommand cmd = this.database.GetSqlStringCommand(commandText))
+            {
+                return this.database.ExecuteDataSet(cmd);
+            }
+        }
+        public DataSet LoadAssetClass()
+        {
+            string commandText = string.Format("select * from AssetClass");
+            using (DbCommand cmd = this.database.GetSqlStringCommand(commandText))
             {
                 return this.database.ExecuteDataSet(cmd);
             }

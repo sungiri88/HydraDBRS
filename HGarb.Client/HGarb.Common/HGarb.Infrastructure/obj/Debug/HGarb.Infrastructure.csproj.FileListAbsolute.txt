@@ -4,3 +4,9 @@ D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\bin\Debug\New
 D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\obj\Debug\HGarb.Infrastructure.csprojResolveAssemblyReference.cache
 D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\obj\Debug\HGarb.Infrastructure.dll
 D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\obj\Debug\HGarb.Infrastructure.pdb
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\bin\Debug\HGarb.Infrastructure.dll
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\bin\Debug\HGarb.Infrastructure.pdb
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\bin\Debug\Newtonsoft.Json.xml
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\obj\Debug\HGarb.Infrastructure.csprojResolveAssemblyReference.cache
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\obj\Debug\HGarb.Infrastructure.dll
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Infrastructure\obj\Debug\HGarb.Infrastructure.pdb

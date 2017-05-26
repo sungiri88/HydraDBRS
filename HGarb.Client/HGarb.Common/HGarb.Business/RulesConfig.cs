@@ -89,7 +89,22 @@ namespace HGarb.Business
 
             return lstStdFields;
         }
+        public List<string> LoadAssetClass()
+        {
+            List<string> lstAssetClass = new List<string>();
+            using (DataSet ds = this.dataAccess.LoadAssetClass())
+            {
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                    {
+                        lstAssetClass.Add(Helper.GetDBValue(dr["AssetClass"]));
+                    }
+                }
+            }
 
+            return lstAssetClass;
+        }
         public bool InsertRulesConfig(RulesInfo rulesInfo)
         {
             try
@@ -157,6 +172,43 @@ namespace HGarb.Business
             try
             {
                 using (DataSet ds = this.dataAccess.LoadGenericRules())
+                {
+                    if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                    {
+                        Dictionary<string, RulesInfo> dictRules = new Dictionary<string, RulesInfo>();
+                        foreach (DataRow dr in ds.Tables[0].Rows)
+                        {
+                            dictRules.Add(Helper.GetDBValue(dr["AssetClass"]), new RulesInfo()
+                            {
+                                AssetClass = Helper.GetDBValue(dr["AssetClass"]),
+                                ElementName = Helper.GetDBValue(dr["ElementName"]),
+                                ElementType = Helper.GetDBValue(dr["ElementType"]),
+                                IsAutoElementName = Helper.ToBool(dr["IsAutoElementName"]),
+                                IsPreviousYear = Helper.ToBool(dr["IsPreviousYear"]),
+                                PreviousYearColumns = Helper.GetDBValue(dr["PreviousYearColumns"]),
+                                RuleCondition = Helper.GetDBValue(dr["RuleCondition"]),
+                                RuleName = Helper.GetDBValue(dr["RuleName"]),
+                                RuleId = Helper.ToInt(dr["Id"])
+                            });
+                        }
+
+                        return dictRules;
+                    }
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public Dictionary<string, RulesInfo> LoadGenericRulesByKey(string dictKey)
+        {
+            try
+            {
+                using (DataSet ds = this.dataAccess.LoadGenericRulesByKey(dictKey))
                 {
                     if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                     {

@@ -26,15 +26,23 @@ namespace HGarb.Web
                     ddlCOmpany.Items.Add(new ListItem(item, item));
                     index += 1;
                 }
-
+                ddlAssetClass.DataSource = this.getAssetClass();
+                ddlAssetClass.DataBind();
                 this.LoadGenericComponents();
+
             }
             else
             {
-                //this.RefreshRulesGrid();
+                this.RefreshRulesGrid();
             }
         }
 
+        protected List<string> getAssetClass()
+        {
+            RulesConfig rulesConfig = new RulesConfig();
+            return rulesConfig.LoadAssetClass();
+            
+        }
         protected void ddlCOmpany_SelectedIndexChanged(object sender, EventArgs e)
         {
             RulesConfig rulesConfig = new RulesConfig();
@@ -228,7 +236,7 @@ namespace HGarb.Web
                 generic_stdFieldName.Items.Add(new ListItem(item, item));
             }
 
-            this.LoadGenericRules();
+            //this.LoadGenericRules();
         }
 
         protected void generic_chkboxIsPreviousYear_CheckedChanged(object sender, EventArgs e)
@@ -250,6 +258,7 @@ namespace HGarb.Web
                 {
                     RulesInfo rulesInfo = new RulesInfo()
                     {
+                        AssetClass = ddlAssetClass.SelectedValue.ToString(),
                         ElementName = generic_txtElementName.Text,
                         ElementType = generic_txtElementType.Text,
                         IsAutoElementName = generic_chkboxIsAutoElementName.Checked,
@@ -337,13 +346,25 @@ namespace HGarb.Web
 
         protected void cbIsInheritRule_CheckedChanged(object sender, EventArgs e)
         {
-            InheritGenericRules();
+            if (cbIsInheritRule.Checked)
+            {
+                panel_GenericRuleType.Visible = true;
+                ListGenericRuleTypes();
+            }
+            else
+                panel_GenericRuleType.Visible = false;
         }
-
-        private void LoadGenericRules()
+        private void ListGenericRuleTypes()
+        {
+            ddlSelectAssetClass.DataSource = this.getAssetClass();
+            ddlSelectAssetClass.DataBind();
+        }
+     
+        protected void btnAddGenericRule_Click(object sender, EventArgs e)
         {
             RulesConfig rulesConfig = new RulesConfig();
-            Dictionary<string, RulesInfo> dictRules = rulesConfig.LoadGenericRules();
+
+            Dictionary<string, RulesInfo> dictRules = rulesConfig.LoadGenericRulesByKey(ddlSelectAssetClass.SelectedItem.ToString().Trim());
             Session["GenericRules"] = dictRules;
             if (dictRules != null && dictRules.Count > 0)
             {
@@ -377,17 +398,17 @@ namespace HGarb.Web
                     tr.Cells.Add(tcIsPrevYear);
                     tr.Cells.Add(tcPrevYrVal);
                     tr.Cells.Add(tcAction);
-                    genric_TableRules.Rows.Add(tr);
+                    tblRules.Rows.Add(tr);
 
-                    generic_txtRuleName.Text = string.Empty;
-                    generic_txtRuleCode.Text = string.Empty;
-                    generic_txtPreviousYearColumn.Text = string.Empty;
-                    generic_stdFieldName.ClearSelection();
-                    generic_lstboxOperator.ClearSelection();
+                    tbRuleName.Text = string.Empty;
+                    tbRuleData.Text = string.Empty;
+                    tbPrevPeriodValues.Text = string.Empty;
+                    lbDEFields.ClearSelection();
+                    lbOperator.ClearSelection();
+
                 }
             }
         }
-
         private void InheritGenericRules()
         {
             RulesConfig rulesConfig = new RulesConfig();
@@ -491,5 +512,7 @@ namespace HGarb.Web
         {
 
         }
+
+        
     }
 }

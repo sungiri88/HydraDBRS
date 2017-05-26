@@ -16,6 +16,7 @@ namespace HGarb.Models
 
     public class RulesInfo
     {
+        public string AssetClass { get; set; }
         public int RuleId { get; set; }
         public string RuleName { get; set; }
         public string RuleCondition { get; set; }

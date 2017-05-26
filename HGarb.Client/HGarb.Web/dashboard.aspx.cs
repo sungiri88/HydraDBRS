@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Configuration;
+using HGarb.Infrastructure;
 
 namespace HGarb.Web
 {
@@ -11,7 +13,8 @@ namespace HGarb.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            SampleVBApp.EValuate.EvalRunTime evalRun = new SampleVBApp.EValuate.EvalRunTime("SLM Student Loan", "SLM Student Loan 2009-3", @"Server=SHANKI-PC\SQLEXPRESS;Database=HGarbSuite;User Id=sa;Password=123;", "102016");
+            string connectionString = Helper.GetAppSetting("ConnectionString");
+            SampleVBApp.EValuate.EvalRunTime evalRun = new SampleVBApp.EValuate.EvalRunTime("SLM Student Loan", "SLM Student Loan 2009-3", connectionString, "102016");
             
         }
     }

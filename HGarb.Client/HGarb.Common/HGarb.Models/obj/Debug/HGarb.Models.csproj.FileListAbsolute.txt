@@ -3,3 +3,8 @@ D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Models\bin\Debug\HGarb.Model
 D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Models\obj\Debug\HGarb.Models.csprojResolveAssemblyReference.cache
 D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Models\obj\Debug\HGarb.Models.dll
 D:\Development\DBRS\HGarb.Client\HGarb.Common\HGarb.Models\obj\Debug\HGarb.Models.pdb
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\bin\Debug\HGarb.Models.dll
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\bin\Debug\HGarb.Models.pdb
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\obj\Debug\HGarb.Models.csprojResolveAssemblyReference.cache
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\obj\Debug\HGarb.Models.dll
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\obj\Debug\HGarb.Models.pdb
