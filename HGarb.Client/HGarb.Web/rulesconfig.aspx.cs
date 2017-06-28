@@ -8,52 +8,49 @@ using HGarb;
 using HGarb.Business;
 using System.Web.UI.HtmlControls;
 using HGarb.Models;
+using System.Xml.Serialization;
 
 namespace HGarb.Web
 {
     public partial class rulesconfig : System.Web.UI.Page
-    {
+    {     
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 RulesConfig rulesConfig = new RulesConfig();
-                ddlCOmpany.Items.Add("");
+                ddlCompany.Items.Add("");
                 List<string> lstCompanies = rulesConfig.LoadCompanies();
                 int index = 0;
                 foreach (var item in lstCompanies)
                 {
-                    ddlCOmpany.Items.Add(new ListItem(item, item));
+                    ddlCompany.Items.Add(new ListItem(item, item));
                     index += 1;
                 }
                 ddlAssetClass.DataSource = this.getAssetClass();
                 ddlAssetClass.DataBind();
                 this.LoadGenericComponents();
-
             }
             else
             {
                 this.RefreshRulesGrid();
             }
         }
-
         protected List<string> getAssetClass()
         {
             RulesConfig rulesConfig = new RulesConfig();
             return rulesConfig.LoadAssetClass();
-            
         }
-        protected void ddlCOmpany_SelectedIndexChanged(object sender, EventArgs e)
+        protected void ddlCompany_SelectedIndexChanged(object sender, EventArgs e)
         {
             RulesConfig rulesConfig = new RulesConfig();
             ddlCompanyHeaders.Items.Add("");
-            List<string> lstCompanies = rulesConfig.LoadCompanyHeader(ddlCOmpany.SelectedItem.Text);
+            List<string> lstCompanies = rulesConfig.LoadCompanyHeader(ddlCompany.SelectedItem.Text);
             foreach (var item in lstCompanies)
             {
                 ddlCompanyHeaders.Items.Add(new ListItem(item, item));
             }
         }
-
         protected void ddlCompanyHeaders_SelectedIndexChanged(object sender, EventArgs e)
         {
             RulesConfig rulesConfig = new RulesConfig();
@@ -62,288 +59,47 @@ namespace HGarb.Web
             {
                 lbDEFields.Items.Add(new ListItem(item, item));
             }
-
-            Dictionary<string, RulesInfo> dictRules = rulesConfig.LoadRules(ddlCompanyHeaders.SelectedItem.Text);
-            Session["Rules"] = dictRules;
-            if (dictRules != null && dictRules.Count > 0)
-            {
-                foreach (var rule in dictRules)
-                {
-                    TableRow tr = new TableRow();
-                    TableCell tcRuleName = new TableCell();
-                    tcRuleName.Text = rule.Key;
-                    TableCell tcRuleData = new TableCell();
-                    tcRuleData.Text = rule.Value.RuleCondition;
-                    TableCell tcElemType = new TableCell();
-                    tcElemType.Text = rule.Value.ElementType;
-                    TableCell tcElemName = new TableCell();
-                    tcElemName.Text = rule.Value.ElementName;
-                    TableCell tcIsAutolem = new TableCell();
-                    tcIsAutolem.Text = rule.Value.IsAutoElementName.ToString();
-                    TableCell tcIsPrevYear = new TableCell();
-                    tcIsPrevYear.Text = rule.Value.IsPreviousYear.ToString();
-                    TableCell tcPrevYrVal = new TableCell();
-                    tcPrevYrVal.Text = rule.Value.PreviousYearColumns;
-
-                    TableCell tcAction = new TableCell();
-                    HtmlGenericControl gc = new HtmlGenericControl();
-                    gc.InnerHtml = "<a href = \"#\"><i class=\"fa fa-2x fa-edit\"></i></a><a href = \"#\"><i class=\"fa fa-2x fa-remove\"></i></a>";
-                    tcAction.Controls.Add(gc);
-                    tr.Cells.Add(tcRuleName);
-                    tr.Cells.Add(tcElemType);
-                    tr.Cells.Add(tcElemName);
-                    tr.Cells.Add(tcIsAutolem);
-                    tr.Cells.Add(tcRuleData);
-                    tr.Cells.Add(tcIsPrevYear);
-                    tr.Cells.Add(tcPrevYrVal);
-                    tr.Cells.Add(tcAction);
-                    tblRules.Rows.Add(tr);
-
-                    tbRuleName.Text = string.Empty;
-                    tbRuleData.Text = string.Empty;
-                    tbPrevPeriodValues.Text = string.Empty;
-                    lbDEFields.ClearSelection();
-                    lbOperator.ClearSelection();
-                }
-            }
         }
-
         protected void btnAddRule_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(tbRuleName.Text))
             {
-                Dictionary<string, RulesInfo> dictRules = new Dictionary<string, RulesInfo>();
+                Rule rule = new Rule();
+                rule.IsPreviousYear = cbPreviousYear.Checked;
+                rule.PreviousYearColumns = tbPrevPeriodValues.Text;
+                rule.RuleName = tbRuleName.Text;
+                rule.RuleData = tbRuleData.Text;
+                RootObject rootObject;
                 if (Session["Rules"] != null)
                 {
-                    dictRules = Session["Rules"] as Dictionary<string, RulesInfo>;
-                }
-
-                if (!dictRules.ContainsKey(tbRuleName.Text.Trim()))
-                {
-                    RulesInfo rulesInfo = new RulesInfo()
-                    {
-                        ElementName = txtElementName.Text,
-                        ElementType = txtElementType.Text,
-                        IsAutoElementName = cbIsAutoElemName.Checked,
-                        IsPreviousYear = cbPreviousYear.Checked,
-                        PreviousYearColumns = tbPrevPeriodValues.Text,
-                        RuleCondition = tbRuleData.Text,
-                        RuleName = tbRuleName.Text
-                    };
-
-                    dictRules.Add(tbRuleName.Text, rulesInfo);
-                    Session["Rules"] = dictRules;
-                    foreach (var rule in dictRules)
-                    {
-                        TableRow tr = new TableRow();
-                        TableCell tcRuleName = new TableCell();
-                        tcRuleName.Text = rule.Key;
-                        TableCell tcRuleData = new TableCell();
-                        tcRuleData.Text = rule.Value.RuleCondition;
-                        TableCell tcElemType = new TableCell();
-                        tcElemType.Text = rule.Value.ElementType;
-                        TableCell tcElemName = new TableCell();
-                        tcElemName.Text = rule.Value.ElementName;
-                        TableCell tcIsAutolem = new TableCell();
-                        tcIsAutolem.Text = rule.Value.IsAutoElementName.ToString();
-                        TableCell tcIsPrevYear = new TableCell();
-                        tcIsPrevYear.Text = rule.Value.IsPreviousYear.ToString();
-                        TableCell tcPrevYrVal = new TableCell();
-                        tcPrevYrVal.Text = rule.Value.PreviousYearColumns;
-
-                        TableCell tcAction = new TableCell();
-                        HtmlGenericControl gc = new HtmlGenericControl();
-                        gc.InnerHtml = "<a href = \"#\"><i class=\"fa fa-2x fa-edit\"></i></a><a href = \"#\"><i class=\"fa fa-2x fa-remove\"></i></a>";
-                        tcAction.Controls.Add(gc);
-                        tr.Cells.Add(tcRuleName);
-                        tr.Cells.Add(tcElemType);
-                        tr.Cells.Add(tcElemName);
-                        tr.Cells.Add(tcIsAutolem);
-                        tr.Cells.Add(tcRuleData);
-                        tr.Cells.Add(tcIsPrevYear);
-                        tr.Cells.Add(tcPrevYrVal);
-                        tr.Cells.Add(tcAction);
-                        tblRules.Rows.Add(tr);
-
-                        tbRuleName.Text = string.Empty;
-                        tbRuleData.Text = string.Empty;
-                        tbPrevPeriodValues.Text = string.Empty;
-                        lbDEFields.ClearSelection();
-                        lbOperator.ClearSelection();
-                    }
+                    rootObject = Session["Rules"] as RootObject;
+                    rootObject.Rules.Add(rule);
+                    Session["Rules"] = rootObject;
                 }
                 else
                 {
-                    tbRuleName.Focus();
+                    rootObject = new RootObject();
+                    rootObject.ElementName = txtElementName.Text;
+                    rootObject.ElementType = txtElementType.Text;
+                    rootObject.IsAutoElementName = cbIsAutoElemName.Checked;
+                    List<Rule> ruleList = new List<Rule>();
+                    ruleList.Add(rule);
+                    rootObject.Rules = ruleList;
+                    Session["Rules"] = rootObject;
                 }
+                rootObject = Session["Rules"] as RootObject;
+                LoadTable(rootObject);
             }
             else
             {
                 tbRuleName.Focus();
             }
-            //trRuleRow.InnerHtml += "<td>" + tbRuleName.Text + "</td><td>" + tbRuleData.Text + "</td><td><a href = \"\"><i class=\"fa fa-2x fa-edit\"></i></a><a href = \"\"><i class=\"fa fa-2x fa-remove\"></i></a></td>";
+            
         }
-
-        protected void cbIsAutoElemName_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         protected void cbPreviousYear_CheckedChanged(object sender, EventArgs e)
         {
             tbPrevPeriodValues.Enabled = !tbPrevPeriodValues.Enabled;
         }
-
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Dictionary<string, RulesInfo> dictRules = default(Dictionary<string, RulesInfo>);
-                if (Session["Rules"] != null)
-                {
-                    dictRules = Session["Rules"] as Dictionary<string, RulesInfo>;
-                }
-
-                if (dictRules != null)
-                {
-                    foreach (var rule in dictRules)
-                    {
-                        RulesConfig rulesConfig = new RulesConfig();
-                        rule.Value.CompanyHeader = ddlCompanyHeaders.SelectedItem.Text;
-                        rulesConfig.InsertRulesConfig(rule.Value);
-                        HGarb.Business.Rules.BuildRule buildRule = new HGarb.Business.Rules.BuildRule();
-                        buildRule.StandardFieldNames = new List<string>();
-                        foreach (var item in lbDEFields.Items)
-                        {
-                            buildRule.StandardFieldNames.Add((item as ListItem).Value);
-                        }
-
-                        buildRule.ConstructRuleCode(ddlCompanyHeaders.SelectedItem.Text);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
-        private void LoadGenericComponents()
-        {
-            RulesConfig rulesConfig = new RulesConfig();
-            List<string> lstStdFields = rulesConfig.LoadGenericStandardFieldNames();
-            foreach (var item in lstStdFields)
-            {
-                generic_stdFieldName.Items.Add(new ListItem(item, item));
-            }
-
-            //this.LoadGenericRules();
-        }
-
-        protected void generic_chkboxIsPreviousYear_CheckedChanged(object sender, EventArgs e)
-        {
-            generic_txtPreviousYearColumn.Enabled = !generic_txtPreviousYearColumn.Enabled;
-        }
-
-        protected void generic_btnAddRule_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(generic_txtRuleName.Text))
-            {
-                Dictionary<string, RulesInfo> dictRules = new Dictionary<string, RulesInfo>();
-                if (Session["GenericRules"] != null)
-                {
-                    dictRules = Session["GenericRules"] as Dictionary<string, RulesInfo>;
-                }
-
-                if (!dictRules.ContainsKey(generic_txtRuleName.Text.Trim()))
-                {
-                    RulesInfo rulesInfo = new RulesInfo()
-                    {
-                        AssetClass = ddlAssetClass.SelectedValue.ToString(),
-                        ElementName = generic_txtElementName.Text,
-                        ElementType = generic_txtElementType.Text,
-                        IsAutoElementName = generic_chkboxIsAutoElementName.Checked,
-                        IsPreviousYear = generic_chkboxIsPreviousYear.Checked,
-                        PreviousYearColumns = generic_txtPreviousYearColumn.Text,
-                        RuleCondition = generic_txtRuleCode.Text,
-                        RuleName = generic_txtRuleName.Text
-                    };
-
-                    dictRules.Add(generic_txtRuleName.Text, rulesInfo);
-                    Session["GenericRules"] = dictRules;
-                    foreach (var rule in dictRules)
-                    {
-                        TableRow tr = new TableRow();
-                        TableCell tcRuleName = new TableCell();
-                        tcRuleName.Text = rule.Key;
-                        TableCell tcRuleData = new TableCell();
-                        tcRuleData.Text = rule.Value.RuleCondition;
-                        TableCell tcElemType = new TableCell();
-                        tcElemType.Text = rule.Value.ElementType;
-                        TableCell tcElemName = new TableCell();
-                        tcElemName.Text = rule.Value.ElementName;
-                        TableCell tcIsAutolem = new TableCell();
-                        tcIsAutolem.Text = rule.Value.IsAutoElementName.ToString();
-                        TableCell tcIsPrevYear = new TableCell();
-                        tcIsPrevYear.Text = rule.Value.IsPreviousYear.ToString();
-                        TableCell tcPrevYrVal = new TableCell();
-                        tcPrevYrVal.Text = rule.Value.PreviousYearColumns;
-
-                        TableCell tcAction = new TableCell();
-                        HtmlGenericControl gc = new HtmlGenericControl();
-                        gc.InnerHtml = "<a href = \"#\"><i class=\"fa fa-2x fa-edit\"></i></a><a href = \"#\"><i class=\"fa fa-2x fa-remove\"></i></a>";
-                        tcAction.Controls.Add(gc);
-                        tr.Cells.Add(tcRuleName);
-                        tr.Cells.Add(tcElemType);
-                        tr.Cells.Add(tcElemName);
-                        tr.Cells.Add(tcIsAutolem);
-                        tr.Cells.Add(tcRuleData);
-                        tr.Cells.Add(tcIsPrevYear);
-                        tr.Cells.Add(tcPrevYrVal);
-                        tr.Cells.Add(tcAction);
-                        genric_TableRules.Rows.Add(tr);
-
-                        generic_txtRuleName.Text = string.Empty;
-                        generic_txtRuleCode.Text = string.Empty;
-                        generic_txtPreviousYearColumn.Text = string.Empty;
-                        generic_stdFieldName.ClearSelection();
-                        generic_lstboxOperator.ClearSelection();
-                    }
-                }
-                else
-                {
-                    generic_txtRuleName.Focus();
-                }
-            }
-            else
-            {
-                generic_txtRuleName.Focus();
-            }
-        }
-
-        protected void generic_btnSave_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Dictionary<string, RulesInfo> dictRules = default(Dictionary<string, RulesInfo>);
-                if (Session["GenericRules"] != null)
-                {
-                    dictRules = Session["GenericRules"] as Dictionary<string, RulesInfo>;
-                }
-
-                if (dictRules != null)
-                {
-                    foreach (var rule in dictRules)
-                    {
-                        RulesConfig rulesConfig = new RulesConfig();
-                        rulesConfig.InsertGenericRulesConfig(rule.Value);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-            }
-        }
-
         protected void cbIsInheritRule_CheckedChanged(object sender, EventArgs e)
         {
             if (cbIsInheritRule.Checked)
@@ -359,138 +115,162 @@ namespace HGarb.Web
             ddlSelectAssetClass.DataSource = this.getAssetClass();
             ddlSelectAssetClass.DataBind();
         }
-     
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Session["Rules"] != null)
+                {
+                    RootObject rootObject = Session["Rules"] as RootObject;
+                    RulesConfig rulesConfig = new RulesConfig();
+                    rulesConfig.InsertRulesConfigV1(rootObject);
+                }
+                ResetFields();
+            }
+            catch (Exception ex)
+            {
+            }
+        }
         protected void btnAddGenericRule_Click(object sender, EventArgs e)
         {
             RulesConfig rulesConfig = new RulesConfig();
 
-            Dictionary<string, RulesInfo> dictRules = rulesConfig.LoadGenericRulesByKey(ddlSelectAssetClass.SelectedItem.ToString().Trim());
-            Session["GenericRules"] = dictRules;
-            if (dictRules != null && dictRules.Count > 0)
+            GenericRootObject genericRootObject = rulesConfig.LoadGenericRulesByKeyV1(ddlSelectAssetClass.SelectedItem.ToString().Trim());
+            Rule rule = new Rule();
+            RootObject rootObject;
+            if (Session["Rules"] != null)
             {
-                foreach (var rule in dictRules)
-                {
-                    TableRow tr = new TableRow();
-                    TableCell tcRuleName = new TableCell();
-                    tcRuleName.Text = rule.Key;
-                    TableCell tcRuleData = new TableCell();
-                    tcRuleData.Text = rule.Value.RuleCondition;
-                    TableCell tcElemType = new TableCell();
-                    tcElemType.Text = rule.Value.ElementType;
-                    TableCell tcElemName = new TableCell();
-                    tcElemName.Text = rule.Value.ElementName;
-                    TableCell tcIsAutolem = new TableCell();
-                    tcIsAutolem.Text = rule.Value.IsAutoElementName.ToString();
-                    TableCell tcIsPrevYear = new TableCell();
-                    tcIsPrevYear.Text = rule.Value.IsPreviousYear.ToString();
-                    TableCell tcPrevYrVal = new TableCell();
-                    tcPrevYrVal.Text = rule.Value.PreviousYearColumns;
-
-                    TableCell tcAction = new TableCell();
-                    HtmlGenericControl gc = new HtmlGenericControl();
-                    gc.InnerHtml = "<a href = \"#\"><i class=\"fa fa-2x fa-edit\"></i></a><a href = \"#\"><i class=\"fa fa-2x fa-remove\"></i></a>";
-                    tcAction.Controls.Add(gc);
-                    tr.Cells.Add(tcRuleName);
-                    tr.Cells.Add(tcElemType);
-                    tr.Cells.Add(tcElemName);
-                    tr.Cells.Add(tcIsAutolem);
-                    tr.Cells.Add(tcRuleData);
-                    tr.Cells.Add(tcIsPrevYear);
-                    tr.Cells.Add(tcPrevYrVal);
-                    tr.Cells.Add(tcAction);
-                    tblRules.Rows.Add(tr);
-
-                    tbRuleName.Text = string.Empty;
-                    tbRuleData.Text = string.Empty;
-                    tbPrevPeriodValues.Text = string.Empty;
-                    lbDEFields.ClearSelection();
-                    lbOperator.ClearSelection();
-
-                }
+                rootObject = Session["Rules"] as RootObject;
+                rootObject.IsGenericRuleInherited = true;
+                rootObject.Rules = rootObject.Rules.Concat(genericRootObject.Rules).ToList();
+                Session["Rules"] = rootObject;
             }
+            else
+            {
+                rootObject = new RootObject();
+                rootObject.IsGenericRuleInherited = true;
+                rootObject.ElementName = txtElementName.Text;
+                rootObject.ElementType = txtElementType.Text;
+                rootObject.IsAutoElementName = cbIsAutoElemName.Checked;
+                List<Rule> ruleList = new List<Rule>();
+                ruleList.Add(rule);
+                rootObject.Rules = ruleList;
+                Session["Rules"] = rootObject;
+            }
+            rootObject = Session["Rules"] as RootObject;
+            LoadTable(rootObject);
+            ResetFields();
+
         }
-        private void InheritGenericRules()
+        
+
+
+        #region Generic Rule Funtions
+        private void LoadGenericComponents()
         {
             RulesConfig rulesConfig = new RulesConfig();
-            Dictionary<string, RulesInfo> dictRules = new Dictionary<string, RulesInfo>();
-            if (Session["Rules"] != null)
+            List<string> lstStdFields = rulesConfig.LoadGenericStandardFieldNames();
+            foreach (var item in lstStdFields)
             {
-                dictRules = Session["Rules"] as Dictionary<string, RulesInfo>;
-            }
-
-            Dictionary<string, RulesInfo> dictGenericRules = rulesConfig.LoadGenericRules();
-            foreach (var item in dictGenericRules)
-            {
-                dictRules.Add("Gen_" + item.Key, item.Value);
-            }
-
-            Session["Rules"] = dictRules;
-            tblRules.Rows.Clear();
-            foreach (var rule in dictRules)
-            {
-                TableRow tr = new TableRow();
-                TableCell tcRuleName = new TableCell();
-                tcRuleName.Text = rule.Key;
-                TableCell tcRuleData = new TableCell();
-                tcRuleData.Text = rule.Value.RuleCondition;
-                TableCell tcElemType = new TableCell();
-                tcElemType.Text = rule.Value.ElementType;
-                TableCell tcElemName = new TableCell();
-                tcElemName.Text = rule.Value.ElementName;
-                TableCell tcIsAutolem = new TableCell();
-                tcIsAutolem.Text = rule.Value.IsAutoElementName.ToString();
-                TableCell tcIsPrevYear = new TableCell();
-                tcIsPrevYear.Text = rule.Value.IsPreviousYear.ToString();
-                TableCell tcPrevYrVal = new TableCell();
-                tcPrevYrVal.Text = rule.Value.PreviousYearColumns;
-
-                TableCell tcAction = new TableCell();
-                HtmlGenericControl gc = new HtmlGenericControl();
-                gc.InnerHtml = "<a href = \"#\"><i class=\"fa fa-2x fa-edit\"></i></a><a href = \"#\"><i class=\"fa fa-2x fa-remove\"></i></a>";
-                tcAction.Controls.Add(gc);
-                tr.Cells.Add(tcRuleName);
-                tr.Cells.Add(tcElemType);
-                tr.Cells.Add(tcElemName);
-                tr.Cells.Add(tcIsAutolem);
-                tr.Cells.Add(tcRuleData);
-                tr.Cells.Add(tcIsPrevYear);
-                tr.Cells.Add(tcPrevYrVal);
-                tr.Cells.Add(tcAction);
-                tblRules.Rows.Add(tr);
-
-                tbRuleName.Text = string.Empty;
-                tbRuleData.Text = string.Empty;
-                tbPrevPeriodValues.Text = string.Empty;
-                lbDEFields.ClearSelection();
-                lbOperator.ClearSelection();
+                generic_stdFieldName.Items.Add(new ListItem(item, item));
             }
         }
+        protected void generic_chkboxIsPreviousYear_CheckedChanged(object sender, EventArgs e)
+        {
+            generic_txtPreviousYearColumn.Enabled = !generic_txtPreviousYearColumn.Enabled;
+        }
+        protected void generic_btnAddRule_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(generic_txtRuleName.Text))
+            {
+                Rule rule = new Rule();
+                rule.IsPreviousYear = generic_chkboxIsPreviousYear.Checked;
+                rule.PreviousYearColumns = generic_txtPreviousYearColumn.Text;
+                rule.RuleName = generic_txtRuleName.Text;
+                rule.RuleData = generic_txtRuleCode.Text;
+                GenericRootObject genericRootObject;
+                if (Session["GenericRules"] != null)
+                {
+                    genericRootObject = Session["GenericRules"] as GenericRootObject;
+                    genericRootObject.Rules.Add(rule);
+                    Session["GenericRules"] = genericRootObject;
+                }
+                else
+                {
+                    genericRootObject = new GenericRootObject();
+                    genericRootObject.AssestClass = ddlAssetClass.SelectedValue.ToString();
+                    genericRootObject.ElementName = generic_txtElementName.Text;
+                    genericRootObject.ElementType = generic_txtElementType.Text;
+                    genericRootObject.IsAutoElementName = generic_chkboxIsAutoElementName.Checked;
+                    List<Rule> ruleList = new List<Rule>();
+                    ruleList.Add(rule);
+                    genericRootObject.Rules = ruleList;
+                    Session["GenericRules"] = genericRootObject;
+                }
+                genericRootObject = Session["GenericRules"] as GenericRootObject;
+                LoadGenericTable(genericRootObject);
+                ResetFields();
+            }
+            else
+            {
+                generic_txtRuleName.Focus();
+            }
+        }
+        protected void generic_btnSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Session["GenericRules"] != null)
+                {
+                    GenericRootObject genericRootObject = Session["GenericRules"] as GenericRootObject;
+                    RulesConfig rulesConfig = new RulesConfig();
+                    rulesConfig.InsertGenericRulesConfigV1(genericRootObject);  
+                }
+                ResetFields();
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+        #endregion
 
+        #region Common Functions
         private void RefreshRulesGrid()
         {
-            Dictionary<string, RulesInfo> dictRules = new Dictionary<string, RulesInfo>();
+            if (Session["GenericRules"] != null)
+            {
+                GenericRootObject genericRootObject = Session["GenericRules"] as GenericRootObject;
+                LoadGenericTable(genericRootObject);
+            }
             if (Session["Rules"] != null)
             {
-                dictRules = Session["Rules"] as Dictionary<string, RulesInfo>;
+                RootObject rootObject = Session["Rules"] as RootObject;
+                LoadTable(rootObject);
             }
-
-            foreach (var rule in dictRules)
+        }
+        private void LoadTable(RootObject rootObject)
+        {
+            for(int i = 1; i < tblRules.Rows.Count; i++)
+            {
+                tblRules.Rows.RemoveAt(i);
+            }
+            foreach (var rule in rootObject.Rules)
             {
                 TableRow tr = new TableRow();
                 TableCell tcRuleName = new TableCell();
-                tcRuleName.Text = rule.Key;
+                tcRuleName.Text = rule.RuleName;
                 TableCell tcRuleData = new TableCell();
-                tcRuleData.Text = rule.Value.RuleCondition;
+                tcRuleData.Text = rule.RuleData;
                 TableCell tcElemType = new TableCell();
-                tcElemType.Text = rule.Value.ElementType;
+                tcElemType.Text = rootObject.ElementType;
                 TableCell tcElemName = new TableCell();
-                tcElemName.Text = rule.Value.ElementName;
+                tcElemName.Text = rootObject.ElementName;
                 TableCell tcIsAutolem = new TableCell();
-                tcIsAutolem.Text = rule.Value.IsAutoElementName.ToString();
+                tcIsAutolem.Text = rootObject.IsAutoElementName.ToString();
                 TableCell tcIsPrevYear = new TableCell();
-                tcIsPrevYear.Text = rule.Value.IsPreviousYear.ToString();
+                tcIsPrevYear.Text = rule.IsPreviousYear.ToString();
                 TableCell tcPrevYrVal = new TableCell();
-                tcPrevYrVal.Text = rule.Value.PreviousYearColumns;
+                tcPrevYrVal.Text = rule.PreviousYearColumns;
 
                 TableCell tcAction = new TableCell();
                 HtmlGenericControl gc = new HtmlGenericControl();
@@ -505,14 +285,61 @@ namespace HGarb.Web
                 tr.Cells.Add(tcPrevYrVal);
                 tr.Cells.Add(tcAction);
                 tblRules.Rows.Add(tr);
+                
             }
         }
-
-        private void BuildRules()
+        private void LoadGenericTable(GenericRootObject genericRootObject)
         {
-
+            for(int i=1;i< generic_TableRules.Rows.Count; i++)
+            {
+                generic_TableRules.Rows.RemoveAt(i); 
+            }
+            foreach (var _rule in genericRootObject.Rules)
+            {
+                TableRow tr = new TableRow();
+                TableCell tcRuleName = new TableCell();
+                tcRuleName.Text = _rule.RuleName;
+                TableCell tcRuleData = new TableCell();
+                tcRuleData.Text = _rule.RuleData;
+                TableCell tcElemType = new TableCell();
+                tcElemType.Text = genericRootObject.ElementType;
+                TableCell tcElemName = new TableCell();
+                tcElemName.Text = genericRootObject.ElementName;
+                TableCell tcIsAutolem = new TableCell();
+                tcIsAutolem.Text = genericRootObject.IsAutoElementName.ToString();
+                TableCell tcIsPrevYear = new TableCell();
+                tcIsPrevYear.Text = _rule.IsPreviousYear.ToString();
+                TableCell tcPrevYrVal = new TableCell();
+                tcPrevYrVal.Text = _rule.PreviousYearColumns;
+                TableCell tcAction = new TableCell();
+                HtmlGenericControl gc = new HtmlGenericControl();
+                gc.InnerHtml = "<a href = \"#\"><i class=\"fa fa-2x fa-edit\"></i></a><a href = \"#\"><i class=\"fa fa-2x fa-remove\"></i></a>";
+                tcAction.Controls.Add(gc);
+                tr.Cells.Add(tcRuleName);
+                tr.Cells.Add(tcElemType);
+                tr.Cells.Add(tcElemName);
+                tr.Cells.Add(tcIsAutolem);
+                tr.Cells.Add(tcRuleData);
+                tr.Cells.Add(tcIsPrevYear);
+                tr.Cells.Add(tcPrevYrVal);
+                tr.Cells.Add(tcAction);
+                generic_TableRules.Rows.Add(tr);
+            }
         }
-
-        
+        private void ResetFields()
+        {
+            
+            generic_txtRuleName.Text = string.Empty;
+            generic_txtRuleCode.Text = string.Empty;
+            generic_txtPreviousYearColumn.Text = string.Empty;
+            generic_stdFieldName.ClearSelection();
+            generic_lstboxOperator.ClearSelection();
+            tbRuleName.Text = string.Empty;
+            tbRuleData.Text = string.Empty;
+            tbPrevPeriodValues.Text = string.Empty;
+            lbDEFields.ClearSelection();
+            lbOperator.ClearSelection();
+        }
+        #endregion
     }
 }

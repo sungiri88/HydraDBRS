@@ -22,13 +22,13 @@ namespace HGarb.Web {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// ddlCOmpany control.
+        /// ddlCompany control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlCOmpany;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCompany;
         
         /// <summary>
         /// ddlCompanyHeaders control.
@@ -292,13 +292,13 @@ namespace HGarb.Web {
         protected global::System.Web.UI.WebControls.Button generic_btnAddRule;
         
         /// <summary>
-        /// genric_TableRules control.
+        /// generic_TableRules control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table genric_TableRules;
+        protected global::System.Web.UI.WebControls.Table generic_TableRules;
         
         /// <summary>
         /// generic_btnSave control.

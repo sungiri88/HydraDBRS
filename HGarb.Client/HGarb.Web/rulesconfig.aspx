@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/hgarb.Master" AutoEventWireup="true" CodeBehind="rulesconfig.aspx.cs" Inherits="HGarb.Web.rulesconfig" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/hgarb.Master" AutoEventWireup="true" CodeBehind="rulesconfig.aspx.cs" EnableEventValidation="false" Inherits="HGarb.Web.rulesconfig" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
@@ -50,7 +50,7 @@
                                     <div class="row form-group">
                                         <label class="control-label col-lg-2" for="listCompany">Companies</label>
                                         <div class="col-lg-10">
-                                            <asp:DropDownList ID="ddlCOmpany" runat="server" class="form-control m-b-10" AutoPostBack="true" OnSelectedIndexChanged="ddlCOmpany_SelectedIndexChanged">
+                                            <asp:DropDownList ID="ddlCompany" runat="server" class="form-control m-b-10" AutoPostBack="true" OnSelectedIndexChanged="ddlCompany_SelectedIndexChanged">
                                             </asp:DropDownList>
                                         </div>
                                     </div>
@@ -204,7 +204,6 @@
                                     <label class="control-label col-lg-2" for="listTemplates">Asset Class</label>
                                     <div class="col-lg-10">
                                         <asp:DropDownList runat="server" ID="ddlAssetClass" Width="30%">
-                                            
                                         </asp:DropDownList>
                                     </div>
                                 </div>
@@ -217,7 +216,7 @@
                                 <div class="row form-group">
                                     <label class="control-label col-lg-2" for="listTemplates">IsAutoElementName</label>
                                     <div class="col-lg-10">
-                                        <asp:CheckBox runat="server" ID="generic_chkboxIsAutoElementName" AutoPostBack="false" OnCheckedChanged="cbIsAutoElemName_CheckedChanged" />
+                                        <asp:CheckBox runat="server" ID="generic_chkboxIsAutoElementName" AutoPostBack="false"/>
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -273,7 +272,7 @@
                                     
                                 </div>
                                 <div class="row form-group">
-                                    <asp:Table class="table table-bordered" runat="server" ID="genric_TableRules">
+                                    <asp:Table class="table table-bordered" runat="server" ID="generic_TableRules">
                                         <asp:TableHeaderRow>
                                             <asp:TableHeaderCell Text="Rule Name" />
                                             <asp:TableHeaderCell Text="Element Type" />

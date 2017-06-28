@@ -130,6 +130,31 @@ namespace HGarb.Business
                 return false;
             }
         }
+        public bool InsertGenericRulesConfigV1(GenericRootObject genericRootObject)
+        {
+            try
+            {
+                this.dataAccess.InsertGenericRulesConfigV1(genericRootObject);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        public bool InsertRulesConfigV1(RootObject rootObject)
+        {
+            try
+            {
+                this.dataAccess.InsertRulesConfigV1(rootObject);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
 
         public Dictionary<string, RulesInfo> LoadRules(string companyHeader)
         {
@@ -238,6 +263,11 @@ namespace HGarb.Business
             {
                 return null;
             }
+        }
+        public GenericRootObject LoadGenericRulesByKeyV1(string dictKey)
+        {
+            GenericRootObject rootObject = this.dataAccess.LoadGenericRulesByKeyV1(dictKey);
+            return rootObject;
         }
     }
 }
