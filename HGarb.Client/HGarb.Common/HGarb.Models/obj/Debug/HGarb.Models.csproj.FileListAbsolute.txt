@@ -8,3 +8,8 @@ C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\bin\Debug\HG
 C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\obj\Debug\HGarb.Models.csprojResolveAssemblyReference.cache
 C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\obj\Debug\HGarb.Models.dll
 C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\obj\Debug\HGarb.Models.pdb
+C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\bin\Debug\HGarb.Models.dll
+C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\bin\Debug\HGarb.Models.pdb
+C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\obj\Debug\HGarb.Models.dll
+C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\obj\Debug\HGarb.Models.pdb
+C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\HGarb.Models\obj\Debug\HGarb.Models.csprojResolveAssemblyReference.cache

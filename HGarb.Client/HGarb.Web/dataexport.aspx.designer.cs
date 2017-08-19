@@ -58,6 +58,24 @@ namespace HGarb.Web {
         protected global::System.Web.UI.WebControls.Panel pnlResult;
         
         /// <summary>
+        /// gvRulesResult control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvRulesResult;
+        
+        /// <summary>
+        /// btnExport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExport;
+        
+        /// <summary>
         /// lbUsers control.
         /// </summary>
         /// <remarks>

@@ -21,78 +21,14 @@
                         <asp:Button ID="btnExeRules" runat="server" Text="Execute Rules" class="btn btn-info" OnClick="btnExeRules_Click" />
                     </div>
                 </div>
-                <asp:Panel ID="pnlResult" runat="server" Visible="false">
-                    <table class="table table-hover">
-                        <tr style="background-color: silver;">
-                            <th>Rule Name</th>
-                            <th>Status</th>
-                            <th>View Data</th>
-                            <th>Edit Data</th>
-                            <th>Assign</th>
-                        </tr>
-                        <tr style="background-color: forestgreen; color: whitesmoke; font-weight: bolder;">
-                            <td>Rule 1</td>
-                            <td>Success</td>
-                            <td>
-                                <a style="color: whitesmoke;">View Data</a>
-                            </td>
-                            <td>
-                                <a href="javascript:return false;" target="_self" style="color: whitesmoke;">
-                                    <i class="ion-edit" style="font-size: 20px;"></i>
-                                </a>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr style="background-color: darkred; color: whitesmoke; font-weight: bolder;">
-                            <td>Rule 2</td>
-                            <td>Fail</td>
-                            <td>
-                                <a style="color: whitesmoke;">View Data</a>
-                            </td>
-                            <td>
-                                <a href="javascript:return false;" target="_self" style="color: whitesmoke;">
-                                    <i class="ion-edit" style="font-size: 20px;"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a target="_self" style="color: whitesmoke;" data-toggle="modal" href="#myModal">
-                                    <i class="ion-android-person" style="font-size: 20px;"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr style="background-color: forestgreen; color: whitesmoke; font-weight: bolder;">
-                            <td>Rule 3</td>
-                            <td>Success</td>
-                            <td>
-                                <a style="color: whitesmoke;">View Data</a>
-                            </td>
-                            <td>
-                                <a href="javascript:return false;" target="_self" style="color: whitesmoke;">
-                                    <i class="ion-edit" style="font-size: 20px;"></i>
-                                </a>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr style="background-color: forestgreen; color: whitesmoke; font-weight: bolder;">
-                            <td>Rule 4</td>
-                            <td>Success</td>
-                            <td>
-                                <a style="color: whitesmoke;">View Data</a>
-                            </td>
-                            <td>
-                                <a href="javascript:return false;" target="_self" style="color: whitesmoke;">
-                                    <i class="ion-edit" style="font-size: 20px;"></i>
-                                </a>
-                            </td>
-                            <td></td>
-                        </tr>
-                    </table>
+                <asp:Panel ID="pnlResult" runat="server" Visible="false" Width="100%">
+                    <asp:GridView runat="server" ID="gvRulesResult" AutoGenerateColumns="true" Width="100%"></asp:GridView>
                     <br />
                     <div class="row form-group">
                         <div class="col-lg-8">
                         </div>
                         <div class="col-lg-4" style="text-align: right;">
-                            <button class="btn btn-info" type="button">Export Data</button>
+                            <asp:Button class="btn btn-info" runat="server" ID="btnExport" OnClick="btnExport_Click" Text="Export Data"></asp:Button>
                         </div>
                     </div>
                 </asp:Panel>

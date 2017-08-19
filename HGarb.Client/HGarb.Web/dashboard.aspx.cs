@@ -13,9 +13,8 @@ namespace HGarb.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string connectionString = Helper.GetAppSetting("ConnectionString");
-            SampleVBApp.EValuate.EvalRunTime evalRun = new SampleVBApp.EValuate.EvalRunTime("SLM Student Loan", "SLM Student Loan 2009-3", connectionString, "102016");
-            
+            //string connectionString = Helper.GetAppSetting("ConnectionString");
+            //RuleTester.EValuate.EvalRunTime evalRun = new RuleTester.EValuate.EvalRunTime("Ford Credit Auto Owner Trust", "Ford Credit Auto Owner Trust 2016-C", connectionString, "052017");
         }
     }
 }

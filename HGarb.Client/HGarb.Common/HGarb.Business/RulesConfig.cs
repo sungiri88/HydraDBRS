@@ -105,31 +105,6 @@ namespace HGarb.Business
 
             return lstAssetClass;
         }
-        public bool InsertRulesConfig(RulesInfo rulesInfo)
-        {
-            try
-            {
-                this.dataAccess.InsertRulesConfig(rulesInfo);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
-        public bool InsertGenericRulesConfig(RulesInfo rulesInfo)
-        {
-            try
-            {
-                this.dataAccess.InsertGenericRulesConfig(rulesInfo);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
         public bool InsertGenericRulesConfigV1(GenericRootObject genericRootObject)
         {
             try
@@ -156,7 +131,7 @@ namespace HGarb.Business
         }
 
 
-        public Dictionary<string, RulesInfo> LoadRules(string companyHeader)
+        public List<RulesInfo> LoadRules(string companyHeader)
         {
             try
             {
@@ -164,23 +139,21 @@ namespace HGarb.Business
                 {
                     if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                     {
-                        Dictionary<string, RulesInfo> dictRules = new Dictionary<string, RulesInfo>();
+                        List<RulesInfo> lstRules = new List<RulesInfo>();
                         foreach (DataRow dr in ds.Tables[0].Rows)
                         {
-                            dictRules.Add(Helper.GetDBValue(dr["RuleName"]), new RulesInfo()
+                            lstRules.Add(new RulesInfo()
                             {
                                 CompanyHeader = Helper.GetDBValue(dr["CompanyHeader"]),
                                 ElementName = Helper.GetDBValue(dr["ElementName"]),
                                 ElementType = Helper.GetDBValue(dr["ElementType"]),
                                 IsAutoElementName = Helper.ToBool(dr["IsAutoElementName"]),
-                                IsPreviousYear = Helper.ToBool(dr["IsPreviousYear"]),
-                                PreviousYearColumns = Helper.GetDBValue(dr["PreviousYearColumns"]),
-                                RuleCondition = Helper.GetDBValue(dr["RuleCondition"]),
+                                RuleCondition = Helper.GetDBValue(dr["RuleData"]),
                                 RuleId = Helper.ToInt(dr["Id"])
                             });
                         }
 
-                        return dictRules;
+                        return lstRules;
                     }
                 }
 

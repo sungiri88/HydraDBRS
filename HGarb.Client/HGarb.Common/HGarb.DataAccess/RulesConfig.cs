@@ -58,39 +58,6 @@ namespace HGarb.DataAccess
                 return this.database.ExecuteDataSet(cmd);
             }
         }
-
-        public void InsertRulesConfig(RulesInfo rulesInfo)
-        {
-            using (DbCommand cmd = this.database.GetStoredProcCommand("pInsertRuleConfig"))
-            {
-                this.database.AddInParameter(cmd, "@RuleName", DbType.String, rulesInfo.RuleName);
-                this.database.AddInParameter(cmd, "@RuleCondition", DbType.String, rulesInfo.RuleCondition);
-                this.database.AddInParameter(cmd, "@ElementName", DbType.String, rulesInfo.ElementName);
-                this.database.AddInParameter(cmd, "@ElementType", DbType.String, rulesInfo.ElementType);
-                this.database.AddInParameter(cmd, "@IsAutoElementName", DbType.Boolean, rulesInfo.IsAutoElementName);
-                this.database.AddInParameter(cmd, "@IsPreviousYear", DbType.Boolean, rulesInfo.IsPreviousYear);
-                this.database.AddInParameter(cmd, "@PreviousYearColumns", DbType.String, rulesInfo.PreviousYearColumns);
-                this.database.AddInParameter(cmd, "@CompanyHeader", DbType.String, rulesInfo.CompanyHeader);
-                this.database.AddInParameter(cmd, "@IsGenericRuleInherited", DbType.Boolean, rulesInfo.IsGenericRuleInherited);
-                this.database.ExecuteNonQuery(cmd);
-            }
-        }
-
-        public void InsertGenericRulesConfig(RulesInfo rulesInfo)
-        {
-            using (DbCommand cmd = this.database.GetStoredProcCommand("pInsertGenericRuleConfig"))
-            {
-                this.database.AddInParameter(cmd, "@AssetClass", DbType.String, rulesInfo.AssetClass);
-                this.database.AddInParameter(cmd, "@RuleName", DbType.String, rulesInfo.RuleName);
-                this.database.AddInParameter(cmd, "@RuleCondition", DbType.String, rulesInfo.RuleCondition);
-                this.database.AddInParameter(cmd, "@ElementName", DbType.String, rulesInfo.ElementName);
-                this.database.AddInParameter(cmd, "@ElementType", DbType.String, rulesInfo.ElementType);
-                this.database.AddInParameter(cmd, "@IsAutoElementName", DbType.Boolean, rulesInfo.IsAutoElementName);
-                this.database.AddInParameter(cmd, "@IsPreviousYear", DbType.Boolean, rulesInfo.IsPreviousYear);
-                this.database.AddInParameter(cmd, "@PreviousYearColumns", DbType.String, rulesInfo.PreviousYearColumns);
-                this.database.ExecuteNonQuery(cmd);
-            }
-        }
         public void InsertRulesConfigV1(RootObject rootObject)
         {
             using (DbCommand cmd = this.database.GetStoredProcCommand("pInsertRuleConfigV1"))
@@ -130,21 +97,21 @@ namespace HGarb.DataAccess
         }
         public DataSet LoadRules(string companyHeader)
         {
-            using (DbCommand cmd = this.database.GetSqlStringCommand("select * from RulesConfig where CompanyHeader = '" + companyHeader + "'"))
+            using (DbCommand cmd = this.database.GetSqlStringCommand("select * from RulesConfigV1 where CompanyHeader = '" + companyHeader + "'"))
             {
                 return this.database.ExecuteDataSet(cmd);
             }
         }
         public DataSet LoadGenericRules()
         {
-            using (DbCommand cmd = this.database.GetSqlStringCommand("select * from GenericRulesConfig"))
+            using (DbCommand cmd = this.database.GetSqlStringCommand("select * from GenericRulesConfigV1"))
             {
                 return this.database.ExecuteDataSet(cmd);
             }
         }
         public DataSet LoadGenericRulesByKey(string dictKey)
         {
-            string commandText = string.Format("select * from GenericRulesConfig where AssetClass = '{0}' ", dictKey);
+            string commandText = string.Format("select * from GenericRulesConfigV1 where AssetClass = '{0}' ", dictKey);
             using (DbCommand cmd = this.database.GetSqlStringCommand(commandText))
             {
                 return this.database.ExecuteDataSet(cmd);

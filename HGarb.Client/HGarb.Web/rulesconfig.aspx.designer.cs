@@ -121,6 +121,15 @@ namespace HGarb.Web {
         protected global::System.Web.UI.WebControls.ListBox lbDEFields;
         
         /// <summary>
+        /// txtCustomField control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCustomField;
+        
+        /// <summary>
         /// lbOperator control.
         /// </summary>
         /// <remarks>
@@ -128,6 +137,15 @@ namespace HGarb.Web {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox lbOperator;
+        
+        /// <summary>
+        /// ddlDataType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDataType;
         
         /// <summary>
         /// tbRuleData control.
@@ -238,6 +256,15 @@ namespace HGarb.Web {
         protected global::System.Web.UI.WebControls.ListBox generic_stdFieldName;
         
         /// <summary>
+        /// txtGenericCustField control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtGenericCustField;
+        
+        /// <summary>
         /// generic_lstboxOperator control.
         /// </summary>
         /// <remarks>
@@ -245,6 +272,15 @@ namespace HGarb.Web {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox generic_lstboxOperator;
+        
+        /// <summary>
+        /// ddlGenericDataType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlGenericDataType;
         
         /// <summary>
         /// generic_txtRuleCode control.

@@ -9,6 +9,7 @@ using HGarb.Business;
 using System.Web.UI.HtmlControls;
 using HGarb.Models;
 using System.Xml.Serialization;
+using HGarb.Business.Rules;
 
 namespace HGarb.Web
 {
@@ -122,8 +123,12 @@ namespace HGarb.Web
                 if (Session["Rules"] != null)
                 {
                     RootObject rootObject = Session["Rules"] as RootObject;
+                    rootObject.CompanyName = ddlCompany.Text;
+                    rootObject.CompanyHeader = ddlCompanyHeaders.Text;
                     RulesConfig rulesConfig = new RulesConfig();
                     rulesConfig.InsertRulesConfigV1(rootObject);
+                    BuildRule buildRule = new BuildRule();
+                    buildRule.ConstructRuleCode(ddlCompanyHeaders.Text);
                 }
                 ResetFields();
             }
@@ -341,5 +346,10 @@ namespace HGarb.Web
             lbOperator.ClearSelection();
         }
         #endregion
+
+        protected void cbIsAutoElemName_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

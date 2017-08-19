@@ -23,3 +23,8 @@ D:\Development\DBRS\HGarb.Client\HGarb.Common\DALC4NET\bin\Debug\DALC4NET.pdb
 D:\Development\DBRS\HGarb.Client\HGarb.Common\DALC4NET\obj\Debug\DALC4NET.csprojResolveAssemblyReference.cache
 D:\Development\DBRS\HGarb.Client\HGarb.Common\DALC4NET\obj\Debug\DALC4NET.dll
 D:\Development\DBRS\HGarb.Client\HGarb.Common\DALC4NET\obj\Debug\DALC4NET.pdb
+C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\bin\Debug\DALC4NET.dll
+C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\bin\Debug\DALC4NET.pdb
+C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\obj\Debug\DALC4NET.dll
+C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\obj\Debug\DALC4NET.pdb
+C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\obj\Debug\DALC4NET.csprojResolveAssemblyReference.cache

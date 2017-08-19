@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualBasic;
+﻿using HGarb.Infrastructure;
+using HGarb.Models;
+using Microsoft.VisualBasic;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -10,14 +12,23 @@ namespace HGarb.Business.Rules
 {
     public class BuildRule
     {
+        private Business.RulesConfig rulesConfigBusiness = null;
+
+        public BuildRule()
+        {
+            this.rulesConfigBusiness = new Business.RulesConfig();
+        }
         public StringBuilder RuleCode { get; set; }
         public List<string> Operators { get; set; }
         public List<string> StandardFieldNames { get; set; }
+        public List<String> MethodNames { get; set; }
         public bool ConstructRuleCode(string companyHeader)
         {
             try
             {
-                this.Operators = new List<string>() { "PLUS", "MINUS", "MULTIPLY", "DIVIDE", "GS", "GE", "EQUALTO", "GREATERTHAN", "LESSERTHAN", "GREATERTHANEQUALTO", "LESSERTHANEQUALTO", "ORELSE", "ANDALSO" };
+                this.MethodNames = new List<string>();
+                this.StandardFieldNames = this.rulesConfigBusiness.LoadStandardFieldNames(companyHeader);
+                this.Operators = new List<string>() { "PLUS", "MINUS", "MULTIPLY", "DIVIDE", "GS", "GE", "EQUALTO", "GREATERTHAN", "LESSERTHAN", "GREATERTHANEQUALTO", "LESSERTHANEQUALTO", "ORELSE", "ANDALSO", "GetDouble" };
                 this.RuleCode = new StringBuilder();
                 this.RuleCode.AppendLine("Imports System");
                 this.RuleCode.AppendLine("Imports System.Xml");
@@ -89,6 +100,15 @@ namespace HGarb.Business.Rules
                                      _TraceLog   = value
                                 End Set
                               End Property");
+                this.RuleCode.AppendLine(@"Private _dictRulesResult As System.Collections.Generic.Dictionary(Of String, String)
+                                            Public Property DictRulesResult() As System.Collections.Generic.Dictionary(Of String, String)
+                                            Get
+                                                Return _dictRulesResult
+                                            End Get
+                                            Set(ByVal value As System.Collections.Generic.Dictionary(Of String, String))
+                                                _dictRulesResult = value
+                                            End Set
+                                            End Property");
 
 
                 this.RuleCode.AppendLine("Public Sub New()");
@@ -138,9 +158,9 @@ namespace HGarb.Business.Rules
                                                 End If
                                             End Sub");
 
-                this.RuleCode.AppendLine(@" Private Function GetItemValue(ByVal key As String)
-                                                If Not DictGlobalValues Is Nothing AndAlso DictGlobalValues.ContainsKey(key) Then
-                                                    Return DictGlobalValues(key)
+                this.RuleCode.AppendLine(@" Private Function GetItemValue(ByVal elementType As String, ByVal elementName As String, ByVal key As String)
+                                                If Not DictGlobalValues Is Nothing AndAlso DictGlobalValues.ContainsKey(elementType + ""~"" + elementName + ""~"" + key) Then
+                                                    Return DictGlobalValues(elementType + ""~"" + elementName + ""~"" + key)
                                                 Else
                                                     Return """"
                                                 End If
@@ -161,7 +181,19 @@ namespace HGarb.Business.Rules
                                                     cmd_GetStatus.CommandText = spName
                                                     cmd_GetStatus.CommandType = CommandType.StoredProcedure
                                                     For Each parameter As SqlParameter In parametercols
-                                                        cmd_GetStatus.Parameters.Add(parameter)
+                                                        Dim tempParam As New SqlParameter
+                                                        tempParam.DbType = parameter.DbType
+                                                        tempParam.Direction = parameter.Direction
+                                                        tempParam.ForceColumnEncryption = parameter.ForceColumnEncryption
+                                                        tempParam.IsNullable = parameter.IsNullable
+                                                        tempParam.LocaleId = parameter.LocaleId
+                                                        tempParam.Offset = parameter.Offset
+                                                        tempParam.ParameterName = parameter.ParameterName
+                                                        tempParam.Size = parameter.Size
+                                                        tempParam.SqlDbType = parameter.SqlDbType
+                                                        tempParam.SqlValue = parameter.SqlValue
+                                                        tempParam.Value = parameter.Value
+                                                        cmd_GetStatus.Parameters.Add(tempParam)
                                                     Next
 
                                                     Dim sqlresult As SqlDataReader = cmd_GetStatus.ExecuteReader()
@@ -177,18 +209,19 @@ namespace HGarb.Business.Rules
 
                                             End Function");
 
-                this.RuleCode.AppendLine(@"Private Sub SetGlobalValues()
+                this.RuleCode.AppendLine(@"Private Sub SetGlobalValues()                                                
+                                                DictRulesResult = New System.Collections.Generic.Dictionary(Of String, String)()
                                                 Dim arrParams As New ArrayList
                                                 arrParams.Add(GetDBParameter(""CompanyHeader"", ""String"", CompanyHeader, ""IN""))
                                                 arrParams.Add(GetDBParameter(""Year"", ""String"", Year, ""IN""))
                                                 Dim dsGlobalValues as DataTable = GetDataSetFromStoreProc(""pGetStandardFieldDetails"", arrParams)
-                                                If Not dsGlobalValues IsNot Nothing AndAlso dsGlobalValues.Rows.Count > 0 Then
-                                                    DictGlobalValues = New Dictionary(Of String, String)()
+                                                If dsGlobalValues IsNot Nothing AndAlso dsGlobalValues.Rows.Count > 0 Then
+                                                    DictGlobalValues = New System.Collections.Generic.Dictionary(Of String, String)()
                                                     For Each item As DataRow In dsGlobalValues.Rows
                                                         Dim stdFieldName As String
                                                         Dim stdFieldValue As String
                                                         stdFieldName = Convert.ToString(item(""StandardFieldName""))
-                                                        stdFieldValue = Convert.ToString(item(""FieldValue""))
+                                                        stdFieldValue = Convert.ToString(item(""StandardValue""))
                                                         If Not String.IsNullOrWhiteSpace(stdFieldName) AndAlso Not DictGlobalValues.ContainsKey(stdFieldName) Then
                                                             DictGlobalValues.Add(stdFieldName, stdFieldValue)
                                                         End If
@@ -196,17 +229,34 @@ namespace HGarb.Business.Rules
                                                 End If
                                            End Sub");
 
+                this.RuleCode.AppendLine(@"Private Function GetDouble(ByVal value As String) As Double
+                                                Try
+                                                    Return Convert.ToDouble(value)
+                                                Catch ex As Exception
+                                                    Return 0.00
+                                                End Try
+                                          End Function");
+
                 RulesConfig rulesConfig = new RulesConfig();
-                Dictionary<string, Models.RulesInfo> dictRules = rulesConfig.LoadRules(companyHeader);
-                foreach (var item in dictRules)
+                List<Models.RulesInfo> lstRules = rulesConfig.LoadRules(companyHeader);
+
+                foreach (var item in lstRules)
                 {
-                    this.RuleCode.AppendLine(BuildBusinessFunction(item.Value));
+                    RootObject rootObject = (RootObject)HGarb.DataAccess.RulesConfig.ObjectFromXML(item.RuleCondition, typeof(RootObject));
+                    this.RuleCode.AppendLine(BuildBusinessFunction(rootObject));
                 }
+
+                this.RuleCode.AppendLine("Public Sub runRules()");
+                foreach (var methodName in this.MethodNames)
+                {
+                    this.RuleCode.AppendLine(methodName + "()");
+                }
+                this.RuleCode.AppendLine("End Sub");
 
                 this.RuleCode.AppendLine("End Class ");
                 this.RuleCode.AppendLine("End Namespace");
                 string log = string.Empty;
-                this.Eval(this.RuleCode.ToString(), ref log);
+                this.Eval(this.RuleCode.ToString(), ref log, companyHeader);
                 return true;
             }
             catch
@@ -215,84 +265,104 @@ namespace HGarb.Business.Rules
             }
         }
 
-        private string BuildBusinessFunction(Models.RulesInfo rulesConfig)
+        private string BuildBusinessFunction(RootObject rootObject)
         {
-            string ruleCond = rulesConfig.RuleCondition;
-            string ruleName = rulesConfig.RuleName;
             StringBuilder funcCode = new StringBuilder();
-            funcCode.AppendLine("Private Sub " + ruleName + "()");
-            string[] rulesBreak = ruleCond.Split('~');
-            string ruleCode = "If";
-            foreach (string field in rulesBreak)
+            rootObject.Rules.ForEach(rulesConfig =>
             {
-                string item = field.Trim();
-                if (Operators.Contains(item))
+                string ruleCond = rulesConfig.RuleData;
+                string ruleName = rulesConfig.RuleName;
+                string stdFieldName = "";
+                this.MethodNames.Add(ruleName);
+                funcCode.AppendLine("Private Sub " + ruleName + "()");
+                funcCode.AppendLine("Dim elementType As String = \"" + rootObject.ElementType + "\"");
+                funcCode.AppendLine("Dim elementName As String = \"" + rootObject.ElementName + "\"");
+                string[] rulesBreak = ruleCond.Split('~');
+                string ruleCode = "If";
+                foreach (string field in rulesBreak)
                 {
-                    switch (item.ToUpper())
+                    string item = field.Trim();
+                    if (string.IsNullOrWhiteSpace(item)) { continue; }
+                    if (Operators.Contains(item))
                     {
-                        case "PLUS":
-                            ruleCode += " +";
-                            break;
-                        case "MINUS":
-                            ruleCode += " -";
-                            break;
-                        case "MULTIPLY":
-                            ruleCode += " *";
-                            break;
-                        case "DIVIDE":
-                            ruleCode += " /";
-                            break;
-                        case "GS":
-                            ruleCode += " (";
-                            break;
-                        case "GE":
-                            ruleCode += " )";
-                            break;
-                        case "EQUALTO":
-                            ruleCode += " =";
-                            break;
-                        case "GREATERTHAN":
-                            ruleCode += " >";
-                            break;
-                        case "LESSERTHAN":
-                            ruleCode += " <";
-                            break;
-                        case "GREATERTHANEQUALTO":
-                            ruleCode += " >=";
-                            break;
-                        case "LESSERTHANEQUALTO":
-                            ruleCode += " <=";
-                            break;
-                        case "ORELSE":
-                            ruleCode += " OrElse";
-                            break;
-                        case "ANDALSO":
-                            ruleCode += " AndAlso";
-                            break;
-                        default:
-                            break;
+                        switch (item.ToUpper())
+                        {
+                            case "PLUS":
+                                ruleCode += " +";
+                                break;
+                            case "MINUS":
+                                ruleCode += " -";
+                                break;
+                            case "MULTIPLY":
+                                ruleCode += " *";
+                                break;
+                            case "DIVIDE":
+                                ruleCode += " /";
+                                break;
+                            case "GS":
+                                ruleCode += " (";
+                                break;
+                            case "GE":
+                                ruleCode += " )";
+                                break;
+                            case "EQUALTO":
+                                ruleCode += " =";
+                                break;
+                            case "GREATERTHAN":
+                                ruleCode += " >";
+                                break;
+                            case "LESSERTHAN":
+                                ruleCode += " <";
+                                break;
+                            case "GREATERTHANEQUALTO":
+                                ruleCode += " >=";
+                                break;
+                            case "LESSERTHANEQUALTO":
+                                ruleCode += " <=";
+                                break;
+                            case "ORELSE":
+                                ruleCode += " OrElse";
+                                break;
+                            case "ANDALSO":
+                                ruleCode += " AndAlso";
+                                break;
+                            case "GetDouble":
+                                ruleCode += item;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else if (StandardFieldNames.Contains(item))
+                    {
+                        stdFieldName = item;
+                        ruleCode += " GetItemValue(elementType, elementName, \"" + item + "\")";
+                    }
+                    else if (item.Contains("GetDouble"))
+                    {
+                        ruleCode += " " + item;
+                    }
+                    else
+                    {
+                        ruleCode += " " + "\"" + item + "\"";
                     }
                 }
-                else if (StandardFieldNames.Contains(item))
-                {
-                    ruleCode += " GetItemValue(\"" + item + "\")";
-                }
-                else
-                {
-                    ruleCode += " " + "\"" + item + "\"";
-                }
-            }
 
-            ruleCode += " Then";
-            funcCode.AppendLine(ruleCode);
-            funcCode.AppendLine("'Log to DB");
-            funcCode.AppendLine("End If");
-            funcCode.AppendLine("End Sub");
+                ruleCode += " Then";
+                funcCode.AppendLine(ruleCode);
+                funcCode.AppendLine("DictRulesResult.Add(\"" + ruleName + "\", \"SUCCESS~\" + GetItemValue(elementType, elementName, \"" + stdFieldName + "\"))");
+                funcCode.AppendLine("Else");
+                funcCode.AppendLine("DictRulesResult.Add(\"" + ruleName + "\", \"FAIL~\" + GetItemValue(elementType, elementName, \"" + stdFieldName + "\"))");
+                funcCode.AppendLine("End If");
+                funcCode.AppendLine("End Sub");
+            });
+
             return funcCode.ToString();
         }
 
-        public object Eval(string vbCode, ref string log)
+        public object Eval(string vbCode, ref string log, string companyHeader)
         {
+            companyHeader = System.Text.RegularExpressions.Regex.Replace(companyHeader, "[^0-9a-zA-Z]+", "");
             VBCodeProvider oCodeProvider = new VBCodeProvider();
             CompilerParameters oCParams = new CompilerParameters();
             CompilerResults oCResults = null;
@@ -309,7 +379,7 @@ namespace HGarb.Business.Rules
                 oCParams.ReferencedAssemblies.Add("mscorlib.dll");
                 oCParams.CompilerOptions = "/t:library";
                 oCParams.GenerateInMemory = true;
-                string filePath = @"C:\Users\ivar\Documents\dumps\test.dll";
+                string filePath = System.IO.Path.Combine(Helper.GetAppSetting("RuleDllSavePath"), companyHeader + ".dll");
                 oCParams.OutputAssembly = filePath;
                 //StringBuilder sb = new StringBuilder("");
                 //sb.Append("Imports System" + Environment.NewLine);
