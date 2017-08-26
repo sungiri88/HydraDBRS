@@ -37,12 +37,11 @@ namespace HGarb.DataAccess
         }
         public DataSet LoadCompanyHeaders(string companyName)
         {
-            using (DbCommand cmd = this.database.GetSqlStringCommand("select Header from CompanyInfo where CompanyName = '" + companyName + "'"))
+            using (DbCommand cmd = this.database.GetSqlStringCommand("select CompanyHeader from CompanyHeaders ch join CompanyInfo ci on ch.CompanyID=ci.Id where ci.CompanyName = '" + companyName + "'"))
             {
                 return this.database.ExecuteDataSet(cmd);
             }
         }
-
         public DataSet LoadStandardFieldNames(string companyHeader)
         {
             using (DbCommand cmd = this.database.GetSqlStringCommand("select distinct StandardFieldName from DataElement DE inner join IncomingFiles I on I.CompanyHeader = '" + companyHeader + "' where DE.StandardFieldName is not null and I.Id = DE.FileId"))
@@ -50,7 +49,6 @@ namespace HGarb.DataAccess
                 return this.database.ExecuteDataSet(cmd);
             }
         }
-
         public DataSet LoadGenericStandardFieldNames()
         {
             using (DbCommand cmd = this.database.GetSqlStringCommand("select distinct StandardFieldName from DataElement DE where DE.StandardFieldName is not null"))
@@ -58,9 +56,47 @@ namespace HGarb.DataAccess
                 return this.database.ExecuteDataSet(cmd);
             }
         }
-        public void InsertRulesConfigV1(RootObject rootObject)
+        public DataSet LoadRules(string companyHeader)
         {
-            using (DbCommand cmd = this.database.GetStoredProcCommand("pInsertRuleConfigV1"))
+            using (DbCommand cmd = this.database.GetSqlStringCommand("select * from RulesConfig where CompanyHeader = '" + companyHeader + "'"))
+            {
+                return this.database.ExecuteDataSet(cmd);
+            }
+        }
+        public DataSet LoadGenericRules()
+        {
+            using (DbCommand cmd = this.database.GetSqlStringCommand("select * from GenericRulesConfig"))
+            {
+                return this.database.ExecuteDataSet(cmd);
+            }
+        }
+        public GenericRootObject LoadGenericRulesByKey(string dictKey)
+        {
+            string commandText = string.Format("select * from GenericRulesConfig where AssetClass = '{0}' ", dictKey);
+            // Have to handle null object response.
+            GenericRootObject genericRootObject = null;
+            using (DbCommand cmd = this.database.GetSqlStringCommand(commandText))
+            {
+
+                var reader = this.database.ExecuteReader(cmd);
+                if (reader.Read())
+                {
+                    genericRootObject = (GenericRootObject)ObjectFromXML(reader["RuleData"].ToString(), typeof(GenericRootObject));
+                }
+                return genericRootObject;
+            }
+        }
+        public DataSet LoadAssetClass()
+        {
+            string commandText = string.Format("select * from AssetClass");
+            using (DbCommand cmd = this.database.GetSqlStringCommand(commandText))
+            {
+                return this.database.ExecuteDataSet(cmd);
+            }
+        }
+        public void InsertRulesConfig(RootObject rootObject)
+        {
+            using (DbCommand cmd = this.database.GetStoredProcCommand("pInsertRuleConfig"))
             {
                 this.database.AddInParameter(cmd, "@RuleData", DbType.String, GetXMLFromObject(rootObject));
                 this.database.AddInParameter(cmd, "@ElementName", DbType.String, rootObject.ElementName);
@@ -81,9 +117,9 @@ namespace HGarb.DataAccess
                 }
             }
         }
-        public void InsertGenericRulesConfigV1(GenericRootObject genericRootObject)
+        public void InsertGenericRulesConfig(GenericRootObject genericRootObject)
         {
-            using (DbCommand cmd = this.database.GetStoredProcCommand("pInsertGenericRuleConfigV1"))
+            using (DbCommand cmd = this.database.GetStoredProcCommand("pInsertGenericRuleConfig"))
             {
                 this.database.AddInParameter(cmd, "@AssetClass", DbType.String, genericRootObject.AssestClass);
                 
@@ -95,50 +131,34 @@ namespace HGarb.DataAccess
                 this.database.ExecuteNonQuery(cmd);
             }
         }
-        public DataSet LoadRules(string companyHeader)
+        public void InsertCompanyHeader(string CompanyName, string CompanyHeader)
         {
-            using (DbCommand cmd = this.database.GetSqlStringCommand("select * from RulesConfigV1 where CompanyHeader = '" + companyHeader + "'"))
+            using (DbCommand cmd = this.database.GetStoredProcCommand("pInsertCompanyHeader"))
             {
-                return this.database.ExecuteDataSet(cmd);
-            }
-        }
-        public DataSet LoadGenericRules()
-        {
-            using (DbCommand cmd = this.database.GetSqlStringCommand("select * from GenericRulesConfigV1"))
-            {
-                return this.database.ExecuteDataSet(cmd);
-            }
-        }
-        public DataSet LoadGenericRulesByKey(string dictKey)
-        {
-            string commandText = string.Format("select * from GenericRulesConfigV1 where AssetClass = '{0}' ", dictKey);
-            using (DbCommand cmd = this.database.GetSqlStringCommand(commandText))
-            {
-                return this.database.ExecuteDataSet(cmd);
-            }
-        }
-        public GenericRootObject LoadGenericRulesByKeyV1(string dictKey)
-        {
-            string commandText = string.Format("select * from GenericRulesConfigV1 where AssetClass = '{0}' ", dictKey);
-            // Have to handle null object response.
-            GenericRootObject genericRootObject = null;
-            using (DbCommand cmd = this.database.GetSqlStringCommand(commandText))
-            {
-
-                var reader = this.database.ExecuteReader(cmd);
-                if(reader.Read())
+                this.database.AddInParameter(cmd, "@CompanyHeader", DbType.String, CompanyHeader);
+                this.database.AddInParameter(cmd, "@CompanyName", DbType.String, CompanyName);
+                try
                 {
-                    genericRootObject = (GenericRootObject)ObjectFromXML(reader["RuleData"].ToString(), typeof(GenericRootObject));
+                    int records = this.database.ExecuteNonQuery(cmd);
                 }
-                return genericRootObject;
+                catch (Exception ex)
+                {
+
+                }
             }
         }
-        public DataSet LoadAssetClass()
+        public void InsertCompany(string CompanyName)
         {
-            string commandText = string.Format("select * from AssetClass");
-            using (DbCommand cmd = this.database.GetSqlStringCommand(commandText))
+            using (DbCommand cmd = this.database.GetSqlStringCommand(string.Format("insert into CompanyInfo(CompanyName) values('{0}')", CompanyName)))
             {
-                return this.database.ExecuteDataSet(cmd);
+                try
+                {
+                    int records = this.database.ExecuteNonQuery(cmd);
+                }
+                catch (Exception ex)
+                {
+
+                }
             }
         }
         public static string GetXMLFromObject(object o)

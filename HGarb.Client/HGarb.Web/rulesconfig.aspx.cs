@@ -126,7 +126,7 @@ namespace HGarb.Web
                     rootObject.CompanyName = ddlCompany.Text;
                     rootObject.CompanyHeader = ddlCompanyHeaders.Text;
                     RulesConfig rulesConfig = new RulesConfig();
-                    rulesConfig.InsertRulesConfigV1(rootObject);
+                    rulesConfig.InsertRulesConfig(rootObject);
                     BuildRule buildRule = new BuildRule();
                     buildRule.ConstructRuleCode(ddlCompanyHeaders.Text);
                 }
@@ -140,7 +140,7 @@ namespace HGarb.Web
         {
             RulesConfig rulesConfig = new RulesConfig();
 
-            GenericRootObject genericRootObject = rulesConfig.LoadGenericRulesByKeyV1(ddlSelectAssetClass.SelectedItem.ToString().Trim());
+            GenericRootObject genericRootObject = rulesConfig.LoadGenericRulesByKey(ddlSelectAssetClass.SelectedItem.ToString().Trim());
             Rule rule = new Rule();
             RootObject rootObject;
             if (Session["Rules"] != null)
@@ -229,7 +229,7 @@ namespace HGarb.Web
                 {
                     GenericRootObject genericRootObject = Session["GenericRules"] as GenericRootObject;
                     RulesConfig rulesConfig = new RulesConfig();
-                    rulesConfig.InsertGenericRulesConfigV1(genericRootObject);  
+                    rulesConfig.InsertGenericRulesConfig(genericRootObject);  
                 }
                 ResetFields();
             }

@@ -48,7 +48,7 @@ namespace HGarb.Business
                 {
                     foreach (DataRow dr in dsCompanyHeaders.Tables[0].Rows)
                     {
-                        companies.Add(Helper.GetDBValue(dr["Header"]));
+                        companies.Add(Helper.GetDBValue(dr["CompanyHeader"]));
                     }
                 }
             }
@@ -105,11 +105,11 @@ namespace HGarb.Business
 
             return lstAssetClass;
         }
-        public bool InsertGenericRulesConfigV1(GenericRootObject genericRootObject)
+        public bool InsertGenericRulesConfig(GenericRootObject genericRootObject)
         {
             try
             {
-                this.dataAccess.InsertGenericRulesConfigV1(genericRootObject);
+                this.dataAccess.InsertGenericRulesConfig(genericRootObject);
                 return true;
             }
             catch (Exception ex)
@@ -117,11 +117,11 @@ namespace HGarb.Business
                 return false;
             }
         }
-        public bool InsertRulesConfigV1(RootObject rootObject)
+        public bool InsertRulesConfig(RootObject rootObject)
         {
             try
             {
-                this.dataAccess.InsertRulesConfigV1(rootObject);
+                this.dataAccess.InsertRulesConfig(rootObject);
                 return true;
             }
             catch (Exception ex)
@@ -202,45 +202,69 @@ namespace HGarb.Business
             }
         }
 
-        public Dictionary<string, RulesInfo> LoadGenericRulesByKey(string dictKey)
+        //public Dictionary<string, RulesInfo> LoadGenericRulesByKey(string dictKey)
+        //{
+        //    try
+        //    {
+        //        using (DataSet ds = this.dataAccess.LoadGenericRulesByKey(dictKey))
+        //        {
+        //            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+        //            {
+        //                Dictionary<string, RulesInfo> dictRules = new Dictionary<string, RulesInfo>();
+        //                foreach (DataRow dr in ds.Tables[0].Rows)
+        //                {
+        //                    dictRules.Add(Helper.GetDBValue(dr["RuleName"]), new RulesInfo()
+        //                    {
+        //                        ElementName = Helper.GetDBValue(dr["ElementName"]),
+        //                        ElementType = Helper.GetDBValue(dr["ElementType"]),
+        //                        IsAutoElementName = Helper.ToBool(dr["IsAutoElementName"]),
+        //                        IsPreviousYear = Helper.ToBool(dr["IsPreviousYear"]),
+        //                        PreviousYearColumns = Helper.GetDBValue(dr["PreviousYearColumns"]),
+        //                        RuleCondition = Helper.GetDBValue(dr["RuleCondition"]),
+        //                        RuleName = Helper.GetDBValue(dr["RuleName"]),
+        //                        RuleId = Helper.ToInt(dr["Id"])
+        //                    });
+        //                }
+
+        //                return dictRules;
+        //            }
+        //        }
+
+        //        return null;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return null;
+        //    }
+        //}
+        public GenericRootObject LoadGenericRulesByKey(string dictKey)
+        {
+            GenericRootObject rootObject = this.dataAccess.LoadGenericRulesByKey(dictKey);
+            return rootObject;
+        }
+        public bool InsertCompanyHeader(string CompanyName, string CompanyHeader )
         {
             try
             {
-                using (DataSet ds = this.dataAccess.LoadGenericRulesByKey(dictKey))
-                {
-                    if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-                    {
-                        Dictionary<string, RulesInfo> dictRules = new Dictionary<string, RulesInfo>();
-                        foreach (DataRow dr in ds.Tables[0].Rows)
-                        {
-                            dictRules.Add(Helper.GetDBValue(dr["RuleName"]), new RulesInfo()
-                            {
-                                ElementName = Helper.GetDBValue(dr["ElementName"]),
-                                ElementType = Helper.GetDBValue(dr["ElementType"]),
-                                IsAutoElementName = Helper.ToBool(dr["IsAutoElementName"]),
-                                IsPreviousYear = Helper.ToBool(dr["IsPreviousYear"]),
-                                PreviousYearColumns = Helper.GetDBValue(dr["PreviousYearColumns"]),
-                                RuleCondition = Helper.GetDBValue(dr["RuleCondition"]),
-                                RuleName = Helper.GetDBValue(dr["RuleName"]),
-                                RuleId = Helper.ToInt(dr["Id"])
-                            });
-                        }
-
-                        return dictRules;
-                    }
-                }
-
-                return null;
+                this.dataAccess.InsertCompanyHeader(CompanyName, CompanyHeader);
+                return true;
             }
             catch (Exception ex)
             {
-                return null;
+                return false;
             }
         }
-        public GenericRootObject LoadGenericRulesByKeyV1(string dictKey)
+        public bool InsertCompany(string CompanyName)
         {
-            GenericRootObject rootObject = this.dataAccess.LoadGenericRulesByKeyV1(dictKey);
-            return rootObject;
+            try
+            {
+                this.dataAccess.InsertCompany(CompanyName);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

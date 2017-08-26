@@ -28,3 +28,10 @@ C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\bin\Debu
 C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\obj\Debug\DALC4NET.dll
 C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\obj\Debug\DALC4NET.pdb
 C:\Users\ivar\Source\Repos\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\obj\Debug\DALC4NET.csprojResolveAssemblyReference.cache
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\bin\Debug\DALC4NET.dll
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\bin\Debug\DALC4NET.pdb
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\bin\Debug\Newtonsoft.Json.dll
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\bin\Debug\Newtonsoft.Json.xml
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\obj\Debug\DALC4NET.csprojResolveAssemblyReference.cache
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\obj\Debug\DALC4NET.dll
+C:\stash\HydraDBRS\HydraDBRS\HGarb.Client\HGarb.Common\DALC4NET\obj\Debug\DALC4NET.pdb

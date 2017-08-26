@@ -122,33 +122,33 @@
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label class="control-label col-lg-2" for="listCompany">Companies</label>
+                                        <label class="control-label col-lg-2" for="ddlCompany">Companies</label>
                                         <div class="col-lg-10">
                                             <asp:DropDownList ID="ddlCompany" runat="server" class="form-control m-b-10" AutoPostBack="true" OnSelectedIndexChanged="ddlCompany_SelectedIndexChanged">
                                             </asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label class="control-label col-lg-2" for="listTemplates">Templates</label>
+                                        <label class="control-label col-lg-2" for="ddlCompanyHeaders">Templates</label>
                                         <div class="col-lg-10">
                                             <asp:DropDownList ID="ddlCompanyHeaders" runat="server" class="form-control m-b-10" AutoPostBack="true" OnSelectedIndexChanged="ddlCompanyHeaders_SelectedIndexChanged">
                                             </asp:DropDownList>
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label class="control-label col-lg-2" for="listTemplates">Element Type</label>
+                                        <label class="control-label col-lg-2" for="txtElementType">Element Type</label>
                                         <div class="col-lg-10">
                                             <asp:TextBox runat="server" ID="txtElementType" />
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label class="control-label col-lg-2" for="listTemplates">IsAutoElementName</label>
+                                        <label class="control-label col-lg-2" for="cbIsAutoElemName">IsAutoElementName</label>
                                         <div class="col-lg-10">
                                             <asp:CheckBox runat="server" ID="cbIsAutoElemName" AutoPostBack="true" OnCheckedChanged="cbIsAutoElemName_CheckedChanged" />
                                         </div>
                                     </div>
                                     <div class="row form-group">
-                                        <label class="control-label col-lg-2" for="listTemplates">Element Name</label>
+                                        <label class="control-label col-lg-2" for="txtElementName">Element Name</label>
                                         <div class="col-lg-10">
                                             <asp:TextBox runat="server" ID="txtElementName" />
                                         </div>
